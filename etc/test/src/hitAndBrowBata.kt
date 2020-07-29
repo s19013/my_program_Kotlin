@@ -1,8 +1,11 @@
 var jackpot :String = ""
-var S : String = ""
+var count = 10
+var gaming = true
 fun main(args: Array<String>) {
     decideJackpot()
-    con()
+    while (gaming){
+        input()
+    }
 }
 
 fun decideJackpot(){
@@ -13,44 +16,56 @@ fun decideJackpot(){
         l.removeAt(1)
 //        println(jackpot)
     }
-
 }
 
-fun con(){
-    var count = 10
-    while (true){
+fun input(){
+    var S : String =""
+    loop@ while (true){
+        var I =0
+        runCatching {
+            println("入力")
+            I = readLine()?.toInt()?:0
+        }.onFailure {
+            S=""
+//                println("いれなおし")
+        }.onSuccess {S=I.toString() }
+        when{
+            S.length!= 4-> {
+                println("いれなおし")
+                S=""
+            }
+            else -> break@loop
+        }
+    }
+    con(S)
+}
+
+fun con(str:String){
         var hit =0
         var brow =0
         if (count ==0){
             println("回数切れ")
             println("答え${jackpot}")
-            break
+            gaming =false
+            return
         }
-        loop@ while (true){
-            println("入力")
-            S = readLine()!!
-            when{
-                S.length!= 4-> {
-                    println("いれなおし")
-                }
-                else -> break@loop
-            }
-        }
-        if (S==jackpot){
+        if (str==jackpot){
             println("hit:4")
-            break
+            gaming = false
+            return
         }
-        else for (x in 0..S.length-1) {
+        else for (x in 0..str.length-1) {
             when{
-                S[x]==jackpot[x] ->hit+=1
-                S[x] in jackpot -> brow+=1
+                str[x]==jackpot[x] ->hit+=1
+                str[x] in jackpot -> {
+                    brow+=1
+                }
                 else ->{}
             }
         }
         println("hit:$hit brow:$brow")
         count -=1
         println("のこり${count}回")
-    }
 }
 
 
