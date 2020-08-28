@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<h1>QRコード</h1>
+<img th:src="@{https://api.qrserver.com/v1/create-qr-code/?data={qr}&size=100x100(qr=${qr})}" alt="">
+</body>
+</html>
